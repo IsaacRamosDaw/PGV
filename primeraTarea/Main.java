@@ -1,7 +1,7 @@
 package PGV.primeraTarea;
 
 public class Main {
-    public static void main(String[] args){
+    void main(String[] args){
     Sumador s = new Sumador();
 
     int n1 = Integer.parseInt(args[0]);
