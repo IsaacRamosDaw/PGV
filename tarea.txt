@@ -1,0 +1,48 @@
+
+
+Se tiene múltiples ficheros de texto llamados datosX.txt, siendo X el número del fichero. En cada uno de ellos hay muchas líneas, cada línea contiene una palabra (puede incluir letras mayúsculas, minúsculas y acentos). Ejemplo:
+
+Ordenador
+ratón  
+SERVIDOR  
+código  
+Internet  
+...
+
+La tarea es diseñar un programa Java multiproceso que haga lo siguiente:
+
+    Un proceso padre lee los ficheros, y crea un proceso hijo por fichero.
+    Cada hijo recibe un subconjunto de palabras.
+
+Cada proceso hijo debe:
+
+    Convertir todas las palabras a minúsculas.
+    Calcular el número total de vocales que contienen sus palabras.
+    Guardar cada resultado parcial en un fichero de salida (por ejemplo: minusculas-1.res, vocales-1.res, minusculas-2.res, vocales-2.res, ..., minusculas-X.res, vocales-X.res).
+
+El proceso padre, tras esperar a que los hijos terminen:
+
+    Lee todos los ficheros .res que le pertecen a ese fichero.
+
+Suma los valores parciales y muestra en pantalla:
+
+    El número total de vocales encontradas en el fichero original.
+    Controlar que si el fichero contiene líneas vacías, no fallen los hijos.
+    Manejar correctamente caracteres acentuados (á, é, í, ó, ú) y caracteres con diéresis como la letra ü, por ejemplo.
+    Guardar también en un fichero .res el número de palabras procesadas por ese hijo, y que el padre muestre un informe final con:
+        Palabras procesadas por cada hijo.
+        Total de vocales encontradas.
+        Promedio de vocales por palabra en el fichero.
+
+Criterios de evaluación (habrá rúbrica en breve):
+
+    Implementación correcta del conteo de vocales (incluyendo mayúsculas, minúsculas y acentos).
+    Escritura de resultados parciales en ficheros separados.
+    Correcta suma e informe final del proceso padre.
+    Gestión de excepciones de entrada/salida y de casos límite (números cero o negativos, desbordamientos, fallo de I/O).
+    Claridad del código y modularidad (por ejemplo, clases separadas Padre / Hijo / Utilidades).
+    Informe con documentación y diagrama de clases en UML.
+    Uso correcto de ProcessBuilder, redirección de salida, espera (por ejemplo Process.waitFor() o Thread.sleep() si fuera necesario).
+    Comentarios y documentación JavaDoc mínimos.
+
+La entrega deberá hacerse en un repositorio, por ejemplo, en Github, y en un fichero PDF.
