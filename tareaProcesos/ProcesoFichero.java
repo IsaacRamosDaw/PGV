@@ -1,4 +1,4 @@
-package PGV.tareaProcesos;
+package PGV.tareaProcesosSinProceso;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
