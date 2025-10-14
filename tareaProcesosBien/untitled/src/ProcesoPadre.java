@@ -6,6 +6,7 @@ public class ProcesoPadre {
   public static void main(String[] args) {
     ProcessBuilder pb;
 
+    // Bucle para lanzar los 5 procesos hijos
     for (int i = 1; i <= 5; i++) {
       ArrayList<String> listaDePalabras = new ArrayList<>();
       try (BufferedReader br = new BufferedReader(new FileReader("datos" + i + ".txt"))) {
@@ -31,67 +32,77 @@ public class ProcesoPadre {
 
           procesoHijo.waitFor();
 
-
-          //| InterruptedException e
-
         } catch (IOException | InterruptedException e) {
           System.err.println("Padre ERROR al lanzar/esperar al Proceso Hijo.");
           e.printStackTrace();
         }
 
       } catch (FileNotFoundException e) {
-        System.out.println("No se ha encontrado el fichero: " + "datos" + i);
+        System.out.println("No se ha encontrado el fichero: " + "datos" + i + ".txt");
       } catch (IOException e) {
-        System.out.println("Error de lectura del fichero: " + "datos" + i);
+        System.out.println("Error de lectura del fichero: " + "datos" + i + ".txt");
       }
     }
 
     try (FileWriter fw = new FileWriter("resumen.res")) {
     } catch (IOException e) {
-      System.err.println("No se pudo crear el archivo: ");
+      System.err.println("No se pudo crear el archivo: resumen.res");
       e.printStackTrace();
     }
 
-    int totalVocales = 0;
+    int totalVocalesGeneral = 0;
 
     for (int i = 1; i <= 5; i++) {
-      int promedioDeVocales = 0;
-      String listaPalbras;
-      String numeroLeido;
+      int totalVocalesFichero = 0;
+      String listaPalabrasString = "";
 
       try (BufferedReader br = new BufferedReader(new FileReader("vocales-" + i + ".res"))) {
+        String numeroLeido;
         while ((numeroLeido = br.readLine()) != null) {
-          totalVocales += Integer.parseInt(numeroLeido);
+          totalVocalesFichero = Integer.parseInt(numeroLeido);
+          totalVocalesGeneral += totalVocalesFichero;
         }
       } catch (IOException e) {
-        throw new RuntimeException(e);
+        throw new RuntimeException("Error al leer vocales-" + i + ".res", e);
       }
 
       try (BufferedReader br = new BufferedReader(new FileReader("listaPalabras-" + i + ".res"))) {
-        while ((listaPalbras = br.readLine()) != null) { 
-          FileWriter fwResumen = new FileWriter("resumen.res", true);
+        String linea;
+        while ((linea = br.readLine()) != null) {
+          listaPalabrasString = linea;
+          
+          String[] arrayPalabras = listaPalabrasString.split(",");
+          int numeroDePalabras = arrayPalabras.length;
+          
+          double promedioDeVocales = 0.0;
+          if (numeroDePalabras > 0) {
+            promedioDeVocales = (double) totalVocalesFichero / numeroDePalabras;
+          }
 
-          fwResumen.write("Lista de palabras del hijo " + i);
-          fwResumen.write("\n");
-          fwResumen.write(listaPalbras);
-          fwResumen.write("\n");
-
-          fwResumen.close();
-
+          try (FileWriter fwResumen = new FileWriter("resumen.res", true)) {
+            fwResumen.write("--- Fichero " + i + " ---\n");
+            fwResumen.write("Lista de palabras del hijo " + i + ":\n");
+            fwResumen.write(listaPalabrasString + "\n");
+            fwResumen.write("Número de palabras: " + numeroDePalabras + "\n");
+            fwResumen.write("Total de vocales: " + totalVocalesFichero + "\n");
+            fwResumen.write("Promedio de vocales por palabra: " + String.format("%.2f", promedioDeVocales) + "\n\n");
+          } catch (IOException e) {
+            throw new RuntimeException("Error al escribir en resumen.res", e);
+          }
         }
       } catch (IOException e) {
-        throw new RuntimeException(e);
+        throw new RuntimeException("Error al leer listaPalabras-" + i + ".res", e);
       }
     }
 
+    // 4. ESCRIBIR EL TOTAL GENERAL
     try (FileWriter fw = new FileWriter("resumen.res", true)){
-      fw.write("Total de vocales encontradas: " + totalVocales);
+      fw.write("==================================\n");
+      fw.write("Total de vocales encontradas en todos los ficheros: " + totalVocalesGeneral);
+      fw.write("\n==================================\n");
     } catch (Exception e) {
-      // TODO: handle exception
+      System.err.println("Error al escribir el total general en resumen.res");
+      e.printStackTrace();
     }
-  }
-
-  public void escribirResumen(){
-
   }
 }
