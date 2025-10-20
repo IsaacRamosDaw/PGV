@@ -1,1 +1,0 @@
-Ordenador,ratón,SERVIDOR,código,Internet

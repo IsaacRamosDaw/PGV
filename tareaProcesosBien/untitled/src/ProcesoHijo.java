@@ -6,7 +6,6 @@ public class ProcesoHijo {
 
     if (args.length == 0) {
       System.err.println("Hijo: Error. No se recibieron argumentos.");
-      System.err.println("Hijo: Error. No se recibieron argumentos.");
       return;
     }
 
@@ -14,8 +13,6 @@ public class ProcesoHijo {
     String procesoValor = args[1];
 
     String[] arrayPalabras = palabrasRecibidas.split(",");
-    //ArrayList<String> listaRecibida = new ArrayList<>(Arrays.asList(arrayPalabras));
-    // ArrayList<String> listaMinusculas = new ArrayList<>();
 
 
     int totalVocales = 0;
@@ -29,7 +26,6 @@ public class ProcesoHijo {
       totalVocales += contarVocales(palabraMinusculas);
     }
 
-    // System.out.println("Hijo: Número total de vocales: " + totalVocales);
 
     crearFichero(procesoValor, totalVocales, totalMinusculas, arrayPalabras);
   }
@@ -60,21 +56,18 @@ public class ProcesoHijo {
       fw.write(""+cantidadVocales);
     } catch (IOException e) {
       System.err.println("Hijo ERROR: No se pudo escribir el archivo: de vocales " + numeroFichero);
-      e.printStackTrace();
     }
 
     try (FileWriter fw = new FileWriter("minusculas-" + numeroFichero + ".res")) {
       fw.write(""+cantidadMinusculas);
     } catch (IOException e) {
       System.err.println("Hijo ERROR: No se pudo escribir el archivo de minusculas " + numeroFichero);
-      e.printStackTrace();
     }
 
     try (FileWriter fw = new FileWriter("listaPalabras-" + String.join(",", numeroFichero) + ".res")) {
       fw.write(""+ String.join(",", listaPalabras));
     } catch (IOException e) {
       System.err.println("Hijo ERROR: No se pudo escribir el archivo de listaDePalabras " + numeroFichero);
-      e.printStackTrace();
     }
   }
 }

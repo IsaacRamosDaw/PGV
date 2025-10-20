@@ -26,9 +26,7 @@ public class ProcesoPadre {
           pb.directory(currentDir);
           pb.inheritIO();
 
-          // Para poder hacer el waitfor
           Process procesoHijo = pb.start();
-
           procesoHijo.waitFor();
 
 
