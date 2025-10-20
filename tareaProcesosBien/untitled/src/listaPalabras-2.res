@@ -1,1 +1,0 @@
-Silla,EsCalera,Bugambilia,Puñeta,Internet
