@@ -6,18 +6,19 @@ public class ProcesoPadre {
     ProcessBuilder pb;
 
     for (int i = 1; i <= 5; i++) {
-      ArrayList<String> listaPalabreas = new ArrayList<>();
+      ArrayList<String> listaPalabras = new ArrayList<>();
 
       try (BufferedReader br = new BufferedReader(new FileReader("datos" + i + ".txt"))) {
         String palabra;
 
-        while ((palabra = br.readLine()) != null) {listaPalabreas.add(palabra);}
+        while ((palabra = br.readLine()) != null) {listaPalabras.add(palabra);}
 
-        String datosParaHijo = String.join(",", listaPalabreas);
+        String palabrasHijo = String.join(",", listaPalabras);
 
-        pb = new ProcessBuilder("java", "ProcesoHijo", datosParaHijo, String.valueOf(i));
+        pb = new ProcessBuilder("java", "ProcesoHijo", palabrasHijo, String.valueOf(i));
         
-        pb.inheritIO();
+        pb.start();
+
         Process process = pb.start();
         process.waitFor();
 
@@ -27,6 +28,7 @@ public class ProcesoPadre {
         System.err.println("Error de lectura del fichero: " + "datos" + i + ".txt");
       } catch (InterruptedException e) {
         System.err.println("Error al Iniciar el proceso");
+        System.err.println(e);
       }
     }
 
@@ -65,11 +67,10 @@ public class ProcesoPadre {
 
           
           try (FileWriter fwResumen = new FileWriter("resumen.res", true)) {
-            fwResumen.write("Fichero " + i + "\n");
             fwResumen.write("Lista de palabras del hijo " + i + ":\n");
             fwResumen.write(listaPalabrasString + "\n");
             fwResumen.write("Total de vocales: " + totalVocalesFichero + "\n");
-            fwResumen.write("Promedio de vocales por palabra: " + String.valueOf(promedioDeVocales) + "\n\n");
+            fwResumen.write("Promedio de vocales por fichero: " + promedioDeVocales + "\n\n");
 
           } catch (IOException e) {
             System.err.println("Error al escribir en resumen.res");

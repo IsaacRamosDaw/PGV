@@ -16,9 +16,9 @@ public class ProcesoHijo {
     int totalMinusculas = 0;
 
     for (String palabra : arrayPalabras) {
-      String palabraMinusculas = palabra.toLowerCase();
-
       totalMinusculas += contarMinusculas(palabra.trim());
+
+      String palabraMinusculas = palabra.toLowerCase();
       totalVocales += contarVocales(palabraMinusculas);
     }
 
@@ -57,7 +57,7 @@ public class ProcesoHijo {
       System.err.println("Hijo ERROR: No se pudo escribir el archivo de minusculas " + numeroFichero);
     }
 
-    try (FileWriter fw = new FileWriter("listaPalabras-" + String.join(",", numeroFichero) + ".res")) {
+    try (FileWriter fw = new FileWriter("listaPalabras-" + numeroFichero + ".res")) {
       fw.write(""+ String.join(",", listaPalabras));
       
     } catch (IOException e) {
