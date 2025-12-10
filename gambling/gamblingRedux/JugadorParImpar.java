@@ -4,20 +4,18 @@ import java.util.Random;
 
 public class JugadorParImpar extends Gambler implements Runnable {
   Random r = new Random();
-  boolean apuestaPar;
+  private boolean apuestaPar;
 
-  public JugadorParImpar(Banca casino, String name) {
-    super(casino, name);
-  }
+  public JugadorParImpar(Banca casino, String name) { super(casino, name); }
 
+  // Método que se encarga de hacer perder dinero al jugador al apostar
   public synchronized void apostar() {
     apuestaPar = r.nextBoolean();
     saldo -= 10;
   }
 
   public synchronized void comprobarResultado() {
-    int numeroGanador = casino.getNumeroGanador();
-    boolean esPar = (numeroGanador % 2 == 0);
+    boolean esPar = (casino.getNumeroGanador() % 2 == 0);
 
     if (apuestaPar == esPar) {
       System.out.println(name + " apostó a " + (apuestaPar ? "PAR" : "IMPAR") + " acertó gana 20");

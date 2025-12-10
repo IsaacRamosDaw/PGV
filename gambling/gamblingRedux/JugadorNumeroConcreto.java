@@ -16,8 +16,7 @@ public class JugadorNumeroConcreto extends Gambler implements Runnable {
     saldo -= 10;
   }
 
-  // Método que se encarga de comprobar si el jugador ha acertado el número,
-  // si acierta gana 360 si no pierde 10
+  // Método que se encarga de comprobar si el jugador ha acertado el número si acierta gana 360 si no pierde 10
   public void comprobarNumero() {
     if (numeroEscogido == casino.getNumeroGanador()) {
       System.out.println(name + " apostó a " + numeroEscogido + " acertó gana 360");

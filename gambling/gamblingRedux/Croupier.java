@@ -1,34 +1,25 @@
 package gamblingRedux;
 
 public class Croupier implements Runnable {
-  // Variables necesarias para que el croupier funcione, la banca a la que
-  // pertenecen todos
+  // Variables necesarias para que el croupier funcione, la banca a la que pertenecen todos
   private final Banca casino;
 
   // Constructor
-  public Croupier(Banca casino) {
-    this.casino = casino;
-  }
+  public Croupier(Banca casino) { this.casino = casino; }
 
-  // Método princopal que se encarga de generar rondas y cambiar el número
-  // ganador
+  // Método princopal que se encarga de generar rondas y cambiar el número ganador
   @Override
   public void run() {
-    int ronda = 1;
-
-    // Mientras la banca no se quede sin dinero se jugará, en el momento en que
-    // la banca se quede sin dinero el croupier se retirará
+    // Mientras la banca no se quede sin dinero se jugará, en el momento en que la banca se quede sin dinero el croupier se retirará
     try {
       while (!casino.bancaIsBroke()) {
 
-        System.out.println("\n");
-        System.out.println("=========================================");
+        System.out.println("\n =========================================");
         System.out.println("Saldo de la banca: " + casino.getSaldo());
-        System.out.println("Inicio de la ronda: " + ronda);
+        System.out.println("Inicio de la ronda: " + casino.getNumeroRonda());
         System.out.println("=========================================");
-        ronda++;
-        casino.siguienteRonda();
 
+        casino.siguienteRonda();
         casino.cambiarNumeroGanador();
         Thread.sleep(3000);
       }
