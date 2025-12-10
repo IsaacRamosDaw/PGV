@@ -5,15 +5,20 @@ import java.util.Random;
 public class JugadorNumeroConcreto extends Gambler implements Runnable {
   Random r = new Random();
 
-  // Constructor
   public JugadorNumeroConcreto(Banca casino, String name) {
     super(casino, name);
     this.numeroEscogido = r.nextInt(1, 37);
   }
 
+  // Método que se encarga de hacer perder dinero al jugador al apostar
+  public void apostar() {
+    numeroEscogido = r.nextInt(1, 37);
+    saldo -= 10;
+  }
+
   // Método que se encarga de comprobar si el jugador ha acertado el número,
   // si acierta gana 360 si no pierde 10
-  public synchronized void comprobarNumero() {
+  public void comprobarNumero() {
     if (numeroEscogido == casino.getNumeroGanador()) {
       System.out.println(name + " apostó a " + numeroEscogido + " acertó gana 360");
       ganarApuesta(360);
@@ -21,12 +26,6 @@ public class JugadorNumeroConcreto extends Gambler implements Runnable {
       System.out.println(name + " apostó a " + numeroEscogido + " no acertó pierde 10");
       casino.bancaGano(10);
     }
-  }
-
-  // Método que se encarga de hacer perder dinero al jugador al apostar
-  public synchronized void apostar() {
-    numeroEscogido = r.nextInt(1, 37);
-    saldo -= 10;
   }
 
   // Método principal que se encarga de jugar

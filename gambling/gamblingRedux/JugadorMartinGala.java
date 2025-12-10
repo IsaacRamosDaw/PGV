@@ -10,9 +10,7 @@ public class JugadorMartinGala extends Gambler implements Runnable {
 
   public JugadorMartinGala(Banca casino, String name) {
     super(casino, name);
-
     this.numeroEscogido = r.nextInt(1, 37);
-
     this.apuestaActual = APUESTA_INICIAL;
   }
 
@@ -44,9 +42,10 @@ public class JugadorMartinGala extends Gambler implements Runnable {
   public void run() {
     while (true) {
       if (imBroke() || apuestaActual > saldo || casino.bancaIsBroke()) {
-        System.out.println(name + " se retira "
-            + (imBroke() ? "¡Bancarrota!"
-                : (apuestaActual > saldo ? "No puede cubrir la apuesta de " + apuestaActual : "Banca perdió."))
+        System.out.println(name + " se retira " +
+            (imBroke() ? "¡Bancarrota!"
+                : (apuestaActual > saldo ? "No puede cubrir la apuesta de " + apuestaActual
+                    : "Banca perdió."))
             + " Saldo final: " + saldo);
         break;
       }

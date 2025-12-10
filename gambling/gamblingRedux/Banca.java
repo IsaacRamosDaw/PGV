@@ -4,7 +4,7 @@ import java.util.Random;
 
 // Modela la banca del casino
 public class Banca {
-  private int SALDO = 50000;
+  private int saldo = 50000;
   Random numeroRandom = new Random();
   int numeroGanador;
 
@@ -15,7 +15,7 @@ public class Banca {
 
   // Método que se encarga de obtener el saldo de la banca
   public synchronized int getSaldo() {
-    return SALDO;
+    return saldo;
   }
 
   // Método que cambia el número ganador
@@ -26,7 +26,7 @@ public class Banca {
 
   // Método que se encarga de hacer ganar dinero a la banca
   public synchronized void bancaGano(int cantidad) {
-    SALDO += cantidad;
+    saldo += cantidad;
   }
 
   // Método que se encarga de hacer perder dinero a la banca
@@ -36,18 +36,18 @@ public class Banca {
       return;
     }
 
-    if ((SALDO - cantidad) <= 0) {
+    if ((saldo - cantidad) <= 0) {
       bancaSinDineroSuficiente(jugadorNombre);
       bancaPerdio();
       return;
     }
-    SALDO -= cantidad;
-    System.out.println("\n--- Banca perdió " + cantidad + " Ahora tiene: " + SALDO + " ---\n");
+    saldo -= cantidad;
+    System.out.println("\n--- Banca perdió " + cantidad + " Ahora tiene: " + saldo + " ---\n");
   }
 
   // Método boolean que informa de si la banca se ha quedado a cero
   public boolean bancaIsBroke() {
-    return 0 >= SALDO;
+    return 0 >= saldo;
   }
 
   // Método que informa de si la banca no puede pagar a un jugador
@@ -58,10 +58,12 @@ public class Banca {
   // Variable para controlar la ronda
   private int numeroRonda = 1;
 
+  // Método que se encarga de obtener el número de la ronda
   public synchronized int getNumeroRonda() {
     return numeroRonda;
   }
 
+  // Método que se encarga de cambiar el número de la ronda
   public synchronized void siguienteRonda() {
     numeroRonda++;
   }

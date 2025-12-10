@@ -28,8 +28,4 @@ public class Gambler {
   public void ganarApuesta(int cantidad) {
     saldo += cantidad;
   }
-
-  public synchronized int getNumeroEscogido() {
-    return numeroEscogido;
-  }
 }
